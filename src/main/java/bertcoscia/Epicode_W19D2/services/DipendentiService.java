@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,10 +27,13 @@ public class DipendentiService {
     @Autowired
     private Cloudinary cloudinary;
 
+    @Autowired
+    private PasswordEncoder bcrypt;
+
     public Dipendente save(NewDipendenteDTO body) {
         if (this.repository.existsByUsername(body.username())) throw new BadRequestException("Username già esistente");
         if (this.repository.existsByEmail(body.email())) throw new BadRequestException("Email già esistente");
-        Dipendente newDipendente = new Dipendente(body.username(), body.nome(), body.cognome(), body.email(), body.password());
+        Dipendente newDipendente = new Dipendente(body.username(), body.nome(), body.cognome(), body.email(), bcrypt.encode(body.password()));
         newDipendente.setUrlAvatar("https://ui-avatars.com/api/?name=" + newDipendente.getNome() + "+" + newDipendente.getCognome());
         return this.repository.save(newDipendente);
     }

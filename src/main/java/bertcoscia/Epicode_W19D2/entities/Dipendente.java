@@ -46,6 +46,7 @@ public class Dipendente implements UserDetails {
         this.cognome = cognome;
         this.email = email;
         this.password = password;
+        this.role = Role.USER;
     }
 
 
