@@ -48,12 +48,13 @@ public class DipendentiController {
 
     // GET http://localhost:3001/dipendenti/{idDipendente}
     @GetMapping("/{idDipendente}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Dipendente findById(@PathVariable UUID idDipendente) {
         return this.service.findById(idDipendente);
     }
 
     // POST http://localhost:3001/dipendenti + body
-    @PostMapping
+    /*@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public NewDipendenteRespDTO save(@RequestBody @Validated NewDipendenteDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
@@ -64,16 +65,18 @@ public class DipendentiController {
         } else {
             return new NewDipendenteRespDTO(this.service.save(body).getIdDipendente());
         }
-    }
+    }*/
 
     // PUT http://localhost:3001/dipendenti/{idDipendente} + body
     @PutMapping("/{idDipendente}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Dipendente findByIdAndUpdate(@PathVariable UUID idDipendente, @RequestBody Dipendente body) {
         return this.service.findByIdAndUpdate(idDipendente, body);
     }
 
     // DELETE http://localhost:3001/dipendenti/{idDipendente}
     @DeleteMapping("/{idDipendente}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable UUID idDipendente) {
         this.service.findByIdAndDelete(idDipendente);
