@@ -25,7 +25,7 @@ public class JWTTools {
 
     public void verifyToken(String token) {
         try {
-
+            Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build().parse(token);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             throw new UnauthorizedException("Problemi con il token. Effettua nuovamente il login");
