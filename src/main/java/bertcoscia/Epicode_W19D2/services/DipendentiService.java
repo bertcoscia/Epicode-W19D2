@@ -52,7 +52,6 @@ public class DipendentiService {
         found.setNome(body.getNome());
         found.setCognome(body.getCognome());
         found.setUsername(body.getUsername());
-        found.setPassword(body.getPassword());
         return this.repository.save(found);
     }
 
